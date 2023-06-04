@@ -46,11 +46,14 @@ struct ExpandedBottomSheet: View {
                     .frame(height: size.width - 50)
                     
                     PlayerView(mainSize: size)
+                    /// Moving it from bottom
+                        .offset(y: animateContent ? 0 : size.height)
                 }
                 .padding(.top, safeArea.top + (safeArea.bottom == 0 ? 10 : 0))
                 .padding(.bottom, safeArea.bottom == 0 ? 10 : safeArea.bottom)
                 .padding(.horizontal, 25)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                .clipped()
                 .onTapGesture {
                     withAnimation(.easeInOut(duration: 0.3)) {
                         expandSheet = false
@@ -90,6 +93,9 @@ private struct PlayerView: View {
             VStack(spacing: spacing) {
                 VStack(spacing: spacing) {
                     musicTextInfo()
+                    videoProgressView(padding: spacing)
+                    videoTimerLabel()
+                    videoPlaybackControls(size: size)
                 }
             }
         }
@@ -97,9 +103,35 @@ private struct PlayerView: View {
     
     
     @ViewBuilder
+    private func videoProgressView(padding: CGFloat) -> some View {
+        Capsule()
+            .fill(.ultraThinMaterial)
+            .environment(\.colorScheme, .light)
+            .frame(height: 5)
+            .padding(.top, padding)
+    }
+    
+    
+    @ViewBuilder
+    private func videoTimerLabel() -> some View {
+        HStack {
+            Text("0:00")
+                .font(.caption)
+                .foregroundColor(.gray)
+            
+            Spacer()
+            
+            Text("3:33")
+                .font(.caption)
+                .foregroundColor(.gray)
+        }
+    }
+    
+    @ViewBuilder
     private func musicTextInfo() -> some View {
         HStack(alignment: .center, spacing: 15) {
             musicTitleLabels()
+            Spacer()
             optionsButton()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -133,7 +165,43 @@ private struct PlayerView: View {
         }
     }
     
+    
+    @ViewBuilder
+    private func videoPlaybackControls(size: CGSize) -> some View {
+        HStack(spacing: size.width * 0.18) {
+            createPlayBackButton(for: "backward.fill", size: size)
+            createPlayBackButton(for: "pause.fill", size: size, largeFont: .largeTitle, smallerFont: .system(size: 50))
+            createPlayBackButton(for: "forward.fill", size: size)
+        }
+    }
+    
+    
+    private func createPlayBackButton(for systemImage: String, size: CGSize,
+                                      largeFont: Font = .title3,
+                                      smallerFont: Font = .title) -> some View {
+        Button {
+            //
+        } label: {
+            Image(systemName: systemImage)
+            ///Dynamic Sizing for smaller to larger iphones
+                .font(size.height < 300 ? largeFont : smallerFont)
+                .foregroundColor(.white)
+        }
+
+    }
 }
+
+
+private struct VolumeView: View {
+    let padding: CGFloat
+    
+    var body: some View {
+        VStack(spacing: padding) {
+            
+        }
+    }
+}
+
 
 
 struct ExpandedBottomSheet_Previews: PreviewProvider {
