@@ -13,6 +13,7 @@
 		E9E5B5E32A2CBBC20096057F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9E5B5E22A2CBBC20096057F /* Preview Assets.xcassets */; };
 		E9E5B5EA2A2CBCC40096057F /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5B5E92A2CBCC40096057F /* HomeView.swift */; };
 		E9E5B5EC2A2CC6180096057F /* ExpandedBottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5B5EB2A2CC6180096057F /* ExpandedBottomSheet.swift */; };
+		E9E5B5EE2A2CCF4D0096057F /* MusicArtworkImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E5B5ED2A2CCF4D0096057F /* MusicArtworkImageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		E9E5B5E22A2CBBC20096057F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E9E5B5E92A2CBCC40096057F /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		E9E5B5EB2A2CC6180096057F /* ExpandedBottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedBottomSheet.swift; sourceTree = "<group>"; };
+		E9E5B5ED2A2CCF4D0096057F /* MusicArtworkImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicArtworkImageView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				E9E5B5DD2A2CBBBF0096057F /* ContentView.swift */,
 				E9E5B5E92A2CBCC40096057F /* HomeView.swift */,
 				E9E5B5EB2A2CC6180096057F /* ExpandedBottomSheet.swift */,
+				E9E5B5ED2A2CCF4D0096057F /* MusicArtworkImageView.swift */,
 				E9E5B5DF2A2CBBC20096057F /* Assets.xcassets */,
 				E9E5B5E12A2CBBC20096057F /* Preview Content */,
 			);
@@ -146,6 +149,7 @@
 				E9E5B5EA2A2CBCC40096057F /* HomeView.swift in Sources */,
 				E9E5B5DE2A2CBBBF0096057F /* ContentView.swift in Sources */,
 				E9E5B5DC2A2CBBBF0096057F /* AppleMusicApp.swift in Sources */,
+				E9E5B5EE2A2CCF4D0096057F /* MusicArtworkImageView.swift in Sources */,
 				E9E5B5EC2A2CC6180096057F /* ExpandedBottomSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

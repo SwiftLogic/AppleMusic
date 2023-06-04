@@ -90,8 +90,7 @@ private struct MusicInfoView: View {
                 if !expandSheet {
                     GeometryReader {
                         let size = $0.size
-                        
-                        musicCoverImageView("p2", size: size)
+                        MusicArtworkImageView(image: "p2", size: size)
                     }
                     .matchedGeometryEffect(id: "ARTWORK", in: animation)
                 }
@@ -123,17 +122,6 @@ private struct MusicInfoView: View {
         }
     }
     
-    
-    @ViewBuilder
-    private func musicCoverImageView(_ image: String,
-                                     size: CGSize) -> some View {
-        Image(image)
-            .resizable()
-            .scaledToFill()
-            .frame(width: size.width, height: size.height)
-            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-    }
-    
     @ViewBuilder
     private func generateButton(for systemImage: String) -> some View {
         Button {
@@ -143,7 +131,6 @@ private struct MusicInfoView: View {
                 .font(.title2)
         }
     }
-
 }
 
 struct HomeView_Previews: PreviewProvider {

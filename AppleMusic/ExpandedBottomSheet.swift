@@ -10,10 +10,37 @@ import SwiftUI
 struct ExpandedBottomSheet: View {
     @Binding var expandSheet: Bool
     var animation: Namespace.ID
+    @State private var animateContent = false
 
     var body: some View {
-        Text("Hello, World!")
-        /// build grab indicator
+        GeometryReader {
+            let size = $0.size
+            let safeArea = $0.safeAreaInsets
+            
+            ZStack {
+                dragIndicator()
+                    .opacity(animateContent ? 1 : 0)
+                
+            }
+            .padding(.top, safeArea.top + (safeArea.bottom == 0 ? 10 : 0))
+            .padding(.bottom, safeArea.bottom == 0 ? 10 : safeArea.bottom)
+            .padding(.horizontal, 25)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            .ignoresSafeArea(.container, edges: .all)
+        }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 0.35)) {
+                animateContent = true
+            }
+        }
+        
+    }
+    
+    @ViewBuilder
+    private func dragIndicator() -> some View {
+        Capsule()
+            .fill(.gray)
+            .frame(width: 40, height: 5)
     }
 }
 
