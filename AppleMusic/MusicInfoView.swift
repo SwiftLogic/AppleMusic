@@ -18,7 +18,7 @@ struct MusicInfoView: View {
                 if !expandSheet {
                     GeometryReader {
                         let size = $0.size
-                        MusicArtworkImageView(image: "p2", size: size)
+                        MusicArtworkImageView(image: "p2", size: size, cornerRadius: expandSheet ? 15 : 5)
                     }
                     .matchedGeometryEffect(id: "ARTWORK", in: animation)
                 }

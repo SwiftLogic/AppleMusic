@@ -40,10 +40,12 @@ struct ExpandedBottomSheet: View {
                     /// Artwork with Hero Animation
                     GeometryReader {
                         let size = $0.size
-                        MusicArtworkImageView(image: "p2", size: size, cornerRadius: 15)
+                        MusicArtworkImageView(image: "p2", size: size, cornerRadius: expandSheet ? 15 : 5)
                     }
                     .matchedGeometryEffect(id: "ARTWORK", in: animation)
                     .frame(height: size.width - 50)
+                    /// For Smaller Devices the padding will be 10 and for larger devices the padding will be 30
+                    .padding(.vertical, size.height < 700 ? 10 : 30)
                     
                     PlayerView(mainSize: size)
                     /// Moving it from bottom
@@ -91,12 +93,19 @@ private struct PlayerView: View {
             let spacing = size.height * 0.04
             
             VStack(spacing: spacing) {
+                
                 VStack(spacing: spacing) {
                     musicTextInfo()
                     videoProgressView(padding: spacing)
                     videoTimerLabel()
-                    videoPlaybackControls(size: size)
                 }
+                .frame(height: size.height / 2.5, alignment: .top)
+                videoPlaybackControls(size: size)
+                    .frame(maxHeight: .infinity)
+
+                VolumeView(padding: spacing, size: size)
+                    .frame(height: size.height / 2.5, alignment: .bottom)
+
             }
         }
     }
@@ -189,15 +198,61 @@ private struct PlayerView: View {
         }
 
     }
+    
 }
 
 
 private struct VolumeView: View {
     let padding: CGFloat
+    let size: CGSize
     
     var body: some View {
         VStack(spacing: padding) {
+            volumeSliderView()
+            someTHIS()
+        }
+    }
+    
+    
+    @ViewBuilder
+    private func volumeSliderView() -> some View {
+        HStack(spacing: 15) {
+            Image(systemName: "speaker.fill")
+                .foregroundColor(.gray)
             
+            Capsule()
+                .fill(.ultraThinMaterial)
+                .environment(\.colorScheme, .light)
+                .frame(height: 5)
+            
+            Image(systemName: "speaker.wave.3.fill")
+                .foregroundColor(.gray)
+        }
+    }
+    
+    @ViewBuilder
+    private func someTHIS() -> some View {
+        HStack(alignment: .top, spacing: size.width * 0.18) {
+            createButton(for: "quote.bubble")
+            VStack(spacing: 6) {
+                createButton(for: "airpods.gen3")
+                Text("Samson's Airpods")
+                    .font(.caption)
+            }
+            createButton(for: "list.bullet")
+        }
+        .foregroundColor(.white)
+        .blendMode(.overlay)
+        .padding(.top, padding)
+    }
+    
+    @ViewBuilder
+    private func createButton(for systemImage: String) -> some View {
+        Button {
+            
+        } label: {
+            Image(systemName: systemImage)
+                .font(.title2)
         }
     }
 }
