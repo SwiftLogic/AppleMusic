@@ -96,11 +96,11 @@ private struct PlayerView: View {
                 
                 VStack(spacing: spacing) {
                     musicTextInfo()
-                    videoProgressView(padding: spacing)
-                    videoTimerLabel()
+                    musicPlayerProgressView(padding: spacing)
+                    musicDurationLabels()
                 }
                 .frame(height: size.height / 2.5, alignment: .top)
-                videoPlaybackControls(size: size)
+                playBackControls(size: size)
                     .frame(maxHeight: .infinity)
 
                 VolumeView(padding: spacing, size: size)
@@ -112,7 +112,7 @@ private struct PlayerView: View {
     
     
     @ViewBuilder
-    private func videoProgressView(padding: CGFloat) -> some View {
+    private func musicPlayerProgressView(padding: CGFloat) -> some View {
         Capsule()
             .fill(.ultraThinMaterial)
             .environment(\.colorScheme, .light)
@@ -122,7 +122,7 @@ private struct PlayerView: View {
     
     
     @ViewBuilder
-    private func videoTimerLabel() -> some View {
+    private func musicDurationLabels() -> some View {
         HStack {
             Text("0:00")
                 .font(.caption)
@@ -176,7 +176,7 @@ private struct PlayerView: View {
     
     
     @ViewBuilder
-    private func videoPlaybackControls(size: CGSize) -> some View {
+    private func playBackControls(size: CGSize) -> some View {
         HStack(spacing: size.width * 0.18) {
             createPlayBackButton(for: "backward.fill", size: size)
             createPlayBackButton(for: "pause.fill", size: size, largeFont: .largeTitle, smallerFont: .system(size: 50))
@@ -209,7 +209,7 @@ private struct VolumeView: View {
     var body: some View {
         VStack(spacing: padding) {
             volumeSliderView()
-            someTHIS()
+            otherControls()
         }
     }
     
@@ -231,7 +231,7 @@ private struct VolumeView: View {
     }
     
     @ViewBuilder
-    private func someTHIS() -> some View {
+    private func otherControls() -> some View {
         HStack(alignment: .top, spacing: size.width * 0.18) {
             createButton(for: "quote.bubble")
             VStack(spacing: 6) {
