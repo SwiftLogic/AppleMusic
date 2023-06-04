@@ -17,6 +17,9 @@ struct HomeView: View {
             TabItemButton(title: "Search", systemName: "magnifyingglass")
         }
         .tint(Color.red)
+        .safeAreaInset(edge: .bottom) {
+            CustomBottomSheet()
+        }
     }
 }
 
@@ -33,6 +36,86 @@ private struct TabItemButton: View {
             .toolbarBackground(.visible, for: .tabBar)
             .toolbarBackground(.ultraThickMaterial, for: .tabBar)
     }
+}
+
+private struct CustomBottomSheet: View {
+    private let defaultTabBarHeight: CGFloat = 49.0
+
+    var body: some View {
+        ZStack {
+            Rectangle()
+                .fill(.ultraThickMaterial)
+                .overlay(MusicInfoView())
+        }
+        .frame(height: 70)
+        .overlay(alignment: .bottom) {
+            lineSeperator()
+        }
+        .offset(y: -defaultTabBarHeight)
+    }
+}
+
+extension CustomBottomSheet {
+    @ViewBuilder
+    private func lineSeperator() -> some View {
+        Rectangle()
+            .fill(.gray.opacity(0.3))
+            .frame(height: 1)
+            .offset(y: -5)
+    }
+}
+
+
+private struct MusicInfoView: View {
+    var body: some View {
+        HStack(spacing: 0) {
+            GeometryReader {
+                let size = $0.size
+                
+                musicCoverImageView("p2", size: size)
+            }
+            .frame(width: 45, height: 45)
+            
+            Text("Look What You Made Me do")
+                .fontWeight(.semibold)
+                .lineLimit(1)
+                .padding(.horizontal, 15)
+            
+            Spacer()
+            
+            generateButton(for: "pause.fill")
+            
+            generateButton(for: "forward.fill")
+                .padding(.leading, 25)
+
+        }
+        .foregroundColor(.primary)
+        .padding(.horizontal)
+        .padding(.bottom, 5)
+        .frame(height: 70)
+    }
+    
+    
+    @ViewBuilder
+    private func musicCoverImageView(_ image: String,
+                                     size: CGSize) -> some View {
+        Image(image)
+            .resizable()
+            .scaledToFill()
+            .frame(width: size.width, height: size.height)
+            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+    }
+    
+    @ViewBuilder
+    private func generateButton(for systemImage: String) -> some View {
+        Button {
+            //
+        } label: {
+            Image(systemName: systemImage)
+                .font(.title2)
+        }
+    }
+
 }
 
 struct HomeView_Previews: PreviewProvider {
