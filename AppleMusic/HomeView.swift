@@ -55,10 +55,16 @@ private struct CustomBottomSheet: View {
 
     var body: some View {
         ZStack {
-            Rectangle()
-                .fill(.ultraThickMaterial)
-                .overlay(MusicInfoView(expandSheet: $expandSheet,
-                                       animation: animation))
+            /// Animating Sheet Background (To Look Like It's Expanding From the Bottom)
+            if expandSheet {
+                Rectangle().fill(.clear)
+            } else {
+                Rectangle()
+                    .fill(.ultraThickMaterial)
+                    .overlay(MusicInfoView(expandSheet: $expandSheet,
+                                           animation: animation))
+                    .matchedGeometryEffect(id: "BGVIEW", in: animation)
+            }
         }
         .frame(height: 70)
         .overlay(alignment: .bottom) {

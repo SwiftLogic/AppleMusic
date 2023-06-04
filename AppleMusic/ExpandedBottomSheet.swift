@@ -21,6 +21,15 @@ struct ExpandedBottomSheet: View {
                 dragIndicator()
                     .opacity(animateContent ? 1 : 0)
                 
+                /// Artwork with Hero Animation
+                GeometryReader {
+                    let size = $0.size
+                    
+                    MusicArtworkImageView(image: "p2", size: size, cornerRadius: 15)
+                }
+                .matchedGeometryEffect(id: "ARTWORK", in: animation)
+                .frame(height: size.width - 50)
+                
             }
             .padding(.top, safeArea.top + (safeArea.bottom == 0 ? 10 : 0))
             .padding(.bottom, safeArea.bottom == 0 ? 10 : safeArea.bottom)
@@ -42,6 +51,8 @@ struct ExpandedBottomSheet: View {
             .fill(.gray)
             .frame(width: 40, height: 5)
     }
+    
+    
 }
 
 struct ExpandedBottomSheet_Previews: PreviewProvider {

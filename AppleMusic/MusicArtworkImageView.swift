@@ -10,7 +10,13 @@ import SwiftUI
 struct MusicArtworkImageView: View {
     let image: String
     let size: CGSize
-    let cornerRadius: CGFloat = 5
+    let cornerRadius: CGFloat
+    
+    init(image: String, size: CGSize, cornerRadius: CGFloat = 5) {
+        self.image = image
+        self.size = size
+        self.cornerRadius = cornerRadius
+    }
 
     var body: some View {
         Image(image)
