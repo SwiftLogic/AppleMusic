@@ -13,11 +13,19 @@ struct HomeView: View {
 
     var body: some View {
         TabView {
-            TabItemButton(title: "Listen Now", systemName: "play.circle.fill", expandSheet: expandSheet)
-            TabItemButton(title: "Browse", systemName: "square.grid.2x2.fill", expandSheet: expandSheet)
-            TabItemButton(title: "Radio", systemName: "dot.radiowaves.left.and.right", expandSheet: expandSheet)
-            TabItemButton(title: "Music", systemName: "play.square.stack", expandSheet: expandSheet)
-            TabItemButton(title: "Search", systemName: "magnifyingglass", expandSheet: expandSheet)
+            ListenNowView()
+                .tabItem {
+                    Image(systemName: "play.circle.fill")
+                    Text("Listen Now")
+                }
+                .toolbarBackground(.visible, for: .tabBar)
+                .toolbarBackground(.ultraThickMaterial, for: .tabBar)
+                .toolbar(expandSheet ? .hidden : .visible, for: .tabBar)
+            
+            TabItemPlaceHolderView(title: "Browse", systemName: "square.grid.2x2.fill", expandSheet: expandSheet)
+            TabItemPlaceHolderView(title: "Radio", systemName: "dot.radiowaves.left.and.right", expandSheet: expandSheet)
+            TabItemPlaceHolderView(title: "Music", systemName: "play.square.stack", expandSheet: expandSheet)
+            TabItemPlaceHolderView(title: "Search", systemName: "magnifyingglass", expandSheet: expandSheet)
         }
         .tint(Color.red)
         .safeAreaInset(edge: .bottom) {
@@ -33,7 +41,7 @@ struct HomeView: View {
     }
 }
 
-private struct TabItemButton: View {
+private struct TabItemPlaceHolderView: View {
     let title: String
     let systemName: String
     let expandSheet: Bool
