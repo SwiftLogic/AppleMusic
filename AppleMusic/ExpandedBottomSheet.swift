@@ -19,7 +19,6 @@ struct ExpandedBottomSheet: View {
             let safeArea = $0.safeAreaInsets
             
             ZStack {
-                
                 RoundedRectangle(cornerRadius: animateContent ? deviceCornerRadius : 0, style: .continuous)
                     .fill(.ultraThickMaterial)
                     .overlay {
@@ -35,13 +34,12 @@ struct ExpandedBottomSheet: View {
                     .matchedGeometryEffect(id: "BGVIEW", in: animation)
                 
                 VStack(spacing: 15) {
-                    dragIndicator()
-                        .opacity(animateContent ? 1 : 0)
+                    dragIndicator(parentSize: size)
                     
                     /// Artwork with Hero Animation
                     GeometryReader {
                         let size = $0.size
-                        MusicArtworkImageView(image: "p2", size: size, cornerRadius: expandSheet ? 15 : 5)
+                        MusicArtworkImageView(image: "p2", size: size, cornerRadius: animateContent ? 15 : 5)
                     }
                     .matchedGeometryEffect(id: "ARTWORK", in: animation)
                     .frame(height: size.width - 50)
@@ -57,28 +55,56 @@ struct ExpandedBottomSheet: View {
                 .padding(.horizontal, 25)
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 .clipped()
-                .onTapGesture {
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        expandSheet = false
-                        animateContent = false
-                    }
-                }
             }
+            .contentShape(Rectangle())
+            .offset(y: offsetY)
+            /// Adding drag gesture on the ZStack inside of geo reader container
+            .gesture(
+                DragGesture()
+                    .onChanged({ value in
+                        onDragGestureChange(value: value)
+                    }).onEnded({ value in
+                        onDragGestureEnd(value: value, size: size)
+                    })
+            
+            )
             .ignoresSafeArea(.container, edges: .all)
-
         }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 0.35)) {
-                animateContent = true
+        .onAppear(perform: viewDidAppear)
+    }
+    
+    @ViewBuilder
+    private func dragIndicator(parentSize size: CGSize) -> some View {
+        Capsule()
+            .fill(.gray)
+            .frame(width: 40, height: 5)
+            .opacity(animateContent ? 1 : 0)
+            /// Matching slide animation
+            .offset(y: animateContent ? 0 : size.height) //
+    }
+    
+    private func onDragGestureChange(value: DragGesture.Value) {
+        let translationY = value.translation.height
+        offsetY = (translationY > 0 ? translationY : 0)
+    }
+    
+    private func onDragGestureEnd(value: DragGesture.Value, size: CGSize) {
+        withAnimation(.easeInOut(duration: 0.3)) {
+            if offsetY > size.height * 0.4 {
+                /// if drag is greater than 40% of screen height close the music player
+                expandSheet = false
+                animateContent = false
+            } else {
+                /// open music player
+                offsetY = .zero
             }
         }
     }
     
-    @ViewBuilder
-    private func dragIndicator() -> some View {
-        Capsule()
-            .fill(.gray)
-            .frame(width: 40, height: 5)
+    private func viewDidAppear() {
+        withAnimation(.easeInOut(duration: 0.35)) {
+            animateContent = true
+        }
     }
 }
 
