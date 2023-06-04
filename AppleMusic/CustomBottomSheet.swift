@@ -48,5 +48,6 @@ struct CustomBottomSheet_Previews: PreviewProvider {
     @Namespace static var namespace
     static var previews: some View {
         CustomBottomSheet(expandSheet: .constant(true), animation: namespace)
+            .preferredColorScheme(.dark)
     }
 }

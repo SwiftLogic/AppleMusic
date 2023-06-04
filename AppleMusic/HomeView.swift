@@ -13,11 +13,11 @@ struct HomeView: View {
 
     var body: some View {
         TabView {
-            TabItemButton(title: "Listen Now", systemName: "play.circle.fill")
-            TabItemButton(title: "Browse", systemName: "square.grid.2x2.fill")
-            TabItemButton(title: "Radio", systemName: "dot.radiowaves.left.and.right")
-            TabItemButton(title: "Music", systemName: "play.square.stack")
-            TabItemButton(title: "Search", systemName: "magnifyingglass")
+            TabItemButton(title: "Listen Now", systemName: "play.circle.fill", expandSheet: expandSheet)
+            TabItemButton(title: "Browse", systemName: "square.grid.2x2.fill", expandSheet: expandSheet)
+            TabItemButton(title: "Radio", systemName: "dot.radiowaves.left.and.right", expandSheet: expandSheet)
+            TabItemButton(title: "Music", systemName: "play.square.stack", expandSheet: expandSheet)
+            TabItemButton(title: "Search", systemName: "magnifyingglass", expandSheet: expandSheet)
         }
         .tint(Color.red)
         .safeAreaInset(edge: .bottom) {
@@ -36,15 +36,21 @@ struct HomeView: View {
 private struct TabItemButton: View {
     let title: String
     let systemName: String
+    let expandSheet: Bool
     
     var body: some View {
-        Text(title)
-            .tabItem {
-                Image(systemName: systemName)
-                Text(title)
-            }
-            .toolbarBackground(.visible, for: .tabBar)
-            .toolbarBackground(.ultraThickMaterial, for: .tabBar)
+        /// iOS Bug, It can be Avoided by wrapping the view inside ScrollView
+        ScrollView(showsIndicators: false) {
+            Text(title)
+                .padding(.top, 25)
+        }
+        .tabItem {
+            Image(systemName: systemName)
+            Text(title)
+        }
+        .toolbarBackground(.visible, for: .tabBar)
+        .toolbarBackground(.ultraThickMaterial, for: .tabBar)
+        .toolbar(expandSheet ? .hidden : .visible, for: .tabBar)
     }
 }
 
