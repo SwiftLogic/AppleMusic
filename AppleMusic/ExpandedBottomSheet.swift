@@ -11,6 +11,7 @@ struct ExpandedBottomSheet: View {
     @Binding var expandSheet: Bool
     var animation: Namespace.ID
     @State private var animateContent = false
+    @State private var offsetY: CGFloat = 0
     
     var body: some View {
         GeometryReader {
@@ -19,10 +20,10 @@ struct ExpandedBottomSheet: View {
             
             ZStack {
                 
-                Rectangle()
+                RoundedRectangle(cornerRadius: animateContent ? deviceCornerRadius : 0, style: .continuous)
                     .fill(.ultraThickMaterial)
                     .overlay {
-                        Rectangle()
+                        RoundedRectangle(cornerRadius: animateContent ? deviceCornerRadius : 0, style: .continuous)
                             .fill(Color("BG"))
                             .opacity(animateContent ? 1 : 0)
                     }
