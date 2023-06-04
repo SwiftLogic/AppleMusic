@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var expandSheet = false
+    @Namespace private var animation
+
     var body: some View {
         TabView {
             TabItemButton(title: "Listen Now", systemName: "play.circle.fill")
@@ -18,7 +21,14 @@ struct HomeView: View {
         }
         .tint(Color.red)
         .safeAreaInset(edge: .bottom) {
-            CustomBottomSheet()
+            CustomBottomSheet(expandSheet: $expandSheet, animation: animation)
+        }
+        .overlay {
+            if expandSheet {
+                ExpandedBottomSheet(expandSheet: $expandSheet, animation: animation)
+                /// Fluent Transition Animation
+                    .transition(.asymmetric(insertion: .identity, removal: .offset(y: -5)))
+            }
         }
     }
 }
@@ -39,13 +49,16 @@ private struct TabItemButton: View {
 }
 
 private struct CustomBottomSheet: View {
+    @Binding var expandSheet: Bool
+    var animation: Namespace.ID
     private let defaultTabBarHeight: CGFloat = 49.0
 
     var body: some View {
         ZStack {
             Rectangle()
                 .fill(.ultraThickMaterial)
-                .overlay(MusicInfoView())
+                .overlay(MusicInfoView(expandSheet: $expandSheet,
+                                       animation: animation))
         }
         .frame(height: 70)
         .overlay(alignment: .bottom) {
@@ -67,12 +80,21 @@ extension CustomBottomSheet {
 
 
 private struct MusicInfoView: View {
+    @Binding var expandSheet: Bool
+    var animation: Namespace.ID
+
     var body: some View {
         HStack(spacing: 0) {
-            GeometryReader {
-                let size = $0.size
-                
-                musicCoverImageView("p2", size: size)
+            /// Matched Geo Hero Animation
+            ZStack {
+                if !expandSheet {
+                    GeometryReader {
+                        let size = $0.size
+                        
+                        musicCoverImageView("p2", size: size)
+                    }
+                    .matchedGeometryEffect(id: "ARTWORK", in: animation)
+                }
             }
             .frame(width: 45, height: 45)
             
@@ -93,6 +115,12 @@ private struct MusicInfoView: View {
         .padding(.horizontal)
         .padding(.bottom, 5)
         .frame(height: 70)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                expandSheet = true
+            }
+        }
     }
     
     
