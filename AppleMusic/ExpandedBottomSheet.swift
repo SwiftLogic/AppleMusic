@@ -44,6 +44,8 @@ struct ExpandedBottomSheet: View {
                     }
                     .matchedGeometryEffect(id: "ARTWORK", in: animation)
                     .frame(height: size.width - 50)
+                    
+                    PlayerView(mainSize: size)
                 }
                 .padding(.top, safeArea.top + (safeArea.bottom == 0 ? 10 : 0))
                 .padding(.bottom, safeArea.bottom == 0 ? 10 : safeArea.bottom)
@@ -64,7 +66,6 @@ struct ExpandedBottomSheet: View {
                 animateContent = true
             }
         }
-        
     }
     
     @ViewBuilder
@@ -73,9 +74,67 @@ struct ExpandedBottomSheet: View {
             .fill(.gray)
             .frame(width: 40, height: 5)
     }
+}
+
+
+private struct PlayerView: View {
+    let mainSize: CGSize
     
+    var body: some View {
+        GeometryReader {
+            let size = $0.size
+            
+            /// Dynamic Spacing Using Available Height
+            let spacing = size.height * 0.04
+            
+            VStack(spacing: spacing) {
+                VStack(spacing: spacing) {
+                    musicTextInfo()
+                }
+            }
+        }
+    }
+    
+    
+    @ViewBuilder
+    private func musicTextInfo() -> some View {
+        HStack(alignment: .center, spacing: 15) {
+            musicTitleLabels()
+            optionsButton()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    @ViewBuilder
+    private func musicTitleLabels() -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Look What You Made Me do")
+                .font(.title3)
+                .fontWeight(.semibold)
+            
+            Text("Taylor Swift")
+                .foregroundColor(.gray)
+        }
+    }
+    
+    @ViewBuilder
+    private func optionsButton() -> some View {
+        Button {
+            
+        } label: {
+            Image(systemName: "ellipsis")
+                .foregroundColor(.white)
+                .padding(12)
+                .background {
+                    Circle()
+                        .fill(.ultraThinMaterial)
+                        .environment(\.colorScheme, .light)
+                }
+        }
+    }
     
 }
+
 
 struct ExpandedBottomSheet_Previews: PreviewProvider {
     static var previews: some View {
