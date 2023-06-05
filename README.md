@@ -24,3 +24,12 @@ Matched Geometry Effect: SwiftUI's matched geometry effect is utilized to synchr
 ### Collapased State (light mode)
 ![](https://github.com/SwiftLogic/AppleMusic/blob/master/README-ASSETS/applemusic-image-lightmode.png)
 
+
+### Demo (dark mode)
+
+![](https://github.com/SwiftLogic/AppleMusic/blob/master/README-ASSETS/demo.darkmode.gif)
+
+### Demo (light mode)
+
+![](https://github.com/SwiftLogic/AppleMusic/blob/master/README-ASSETS/demo.lightmode.gif)
+
