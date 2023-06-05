@@ -25,7 +25,7 @@ struct MusicInfoView: View {
             }
             .frame(width: 45, height: 45)
             
-            Text("Look What You Made Me do")
+            Text("Material Girl (feat. Taylor Hanson of Hanson)")
                 .fontWeight(.semibold)
                 .lineLimit(1)
                 .padding(.horizontal, 15)

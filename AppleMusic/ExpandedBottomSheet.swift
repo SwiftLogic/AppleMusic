@@ -176,11 +176,12 @@ private struct PlayerView: View {
     @ViewBuilder
     private func musicTitleLabels() -> some View {
         VStack(alignment: .leading, spacing: 4) {
-            Text("Look What You Made Me do")
+            Text("Material Girl (feat. Taylor Hanson of Hanson)")
                 .font(.title3)
                 .fontWeight(.semibold)
+                .foregroundColor(.white)
             
-            Text("Taylor Swift")
+            Text("AWOLNATION, Hanson")
                 .foregroundColor(.gray)
         }
     }
@@ -263,7 +264,7 @@ private struct VolumeView: View {
             createButton(for: "quote.bubble")
             VStack(spacing: 6) {
                 createButton(for: "airpods.gen3")
-                Text("Samson's Airpods")
+                Text("Osaretin's Airpods")
                     .font(.caption)
             }
             createButton(for: "list.bullet")
